@@ -1,50 +1,81 @@
-import 'babel-polyfill';
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import d3 from 'd3';
-import Bar from '../elements/bar'
-import Chart from '../core/chart'
-import Title from '../core/title'
-import Axis from '../core/axis'
+import Chart from './Chart.js'
+import Axis from './Axis.js'
+import { axis, xAxis, yAxis, levelsAxis } from './Axis.css'
+import DataSeries from './DataSeries.js'
 
-class DataSeries extends Component {
-  render() {
-    let props = this.props;
-
-    let bars = this.props.data.map(function(point, i) {
-      return (
-        <Bar height={props.height - props.yScale(point)} width={props.xScale.rangeBand()} offset={props.xScale(i)} availableHeight={props.height} color={props.color} key={i} />
-      )
-    });
-
-    return (
-      <g>{bars}</g>
-    )
+const styles = {
+  transparentBg: {
+    background: 'transparent'
+  },
+  space: {
+    marginTop: '25px',
+  },
+  shadow: {
+    padding: '2em 2em 2em 7em'
+  },
+  title: {
+    align: 'middle',
+    fontSize: '16px'
+  },
+  margin: {
+    margin: '0 auto'
   }
 }
 
 class BarChart extends Component {
   render() {
+    let levels = ['Jon Snow', 'Broken Toys', 'Proficient', 'Like Whoa', 'Master']
+    let x = this.props.data.map(function (obj) {
+      return Object.keys(obj)[0];
+    });
+    let y = this.props.data.map(function (obj) {
+      let key = Object.keys(obj)[0];
+      return obj[key];
+    });;
+    let yMax = Math.max(...y);
 
     let yScale = d3.scale.linear()
-      .domain([0,d3.max(this.props.data)])
+      .domain([0,yMax])
       .range([this.props.height, 0]);
 
+    let levelsScale = d3.scale.ordinal()
+      .domain(levels)
+      .rangePoints([this.props.height, 0], 0.5);
+
     let xScale = d3.scale.ordinal()
-      .domain(d3.range(this.props.data.length))
-      .rangeRoundBands([0, this.props.width], 0.05);
+      .domain(d3.range(x.length))
+      .rangeRoundBands([0, this.props.width], 0.1);
 
     return (
-      <Chart width={this.props.width} height={this.props.height}>
-        <Title width={this.props.width} align='middle' size='16px' title={this.props.title} />
-        <DataSeries data={this.props.data}
+      <Chart style={styles.shadow} width={this.props.width} height={this.props.height}>
+        <Axis names={x}
+          axisType={'levelsAxis'}
+          height={this.props.height}
+          className={levelsAxis}
+          scale={levelsScale}
+          width={this.props.width}
+          orient={'left'} />
+        <DataSeries data={y}
                     width={this.props.width}
                     height={this.props.height}
                     color={this.props.color}
                     xScale={xScale}
-                    yScale={yScale} />
-        <Axis height={this.props.height} className="yAxis" scale={yScale} orient={'left'} />
-        <Axis height={this.props.height} className="xAxis" scale={xScale} orient={'bottom'} />
+                    yScale={yScale}
+                    names={x}/>
+        <Axis axisType={'yAxis'}
+          height={this.props.height}
+          className={xAxis}
+          scale={yScale}
+          orient={'left'} />
+        <Axis names={x}
+          axisType={'xAxis'}
+          height={this.props.height}
+          className={xAxis}
+          scale={xScale}
+          orient={'bottom'} />
       </Chart>
     )
   }
