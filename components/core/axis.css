@@ -1,0 +1,44 @@
+@import '../../sharedStyles/constants.css';
+
+.axis path,
+.axis tick line {
+  fill: none;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  font-family: sans-serif;
+  font-size: 1em;
+  color: var(--white);
+}
+
+.xAxis path,
+.xAxis tick line {
+  fill: none;
+  stroke: none;
+  shape-rendering: crispEdges;
+}
+
+.xAxis text {
+  font-family: 'Ubuntu', sans-serif;;
+  font-size: 0.9em;
+  color: var(--white);
+}
+
+.levelsAxis path {
+  fill: none;
+  stroke: none;
+  shape-rendering: crispEdges;
+}
+
+.levelsAxis tick line {
+  fill: black;
+  stroke: black;
+  z-index: -5;
+  shape-rendering: crispEdges;
+}
+
+.levelsAxis text {
+  font-family: sans-serif;
+  font-size: 1.1em;
+}

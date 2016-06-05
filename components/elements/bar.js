@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import React, { Component, PropTypes } from 'react'
 import { render, findDOMNode } from 'react-dom'
 import d3 from 'd3'

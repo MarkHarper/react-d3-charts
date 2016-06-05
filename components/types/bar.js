@@ -1,10 +1,11 @@
+import 'babel-polyfill';
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import d3 from 'd3';
-import Chart from './Chart.js'
-import Axis from './Axis.js'
-import { axis, xAxis, yAxis, levelsAxis } from './Axis.css'
-import DataSeries from './DataSeries.js'
+import Chart from '../core/Chart.js'
+import Axis from '../core/Axis.js'
+import { axis, xAxis, yAxis, levelsAxis } from '../core/Axis.css'
+import DataSeries from '../elements/dataseries.js'
 
 const styles = {
   transparentBg: {

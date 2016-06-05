@@ -25,8 +25,8 @@ module.exports = {
         include: __dirname
       },
       {
-        test: /\.css?$/,
-        loaders: [ 'style', 'raw' ],
+        test: /\.css$/,
+        loader: 'style!css?sourceMap&modules&localIdentName=[name]__[local]___[hash:base64:5]',
         include: __dirname
       }
     ]
